@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignedDev Studio | Professional Logo, UI/UX & Web Design</title>
+    <!-- Tailwind CSS v4 & FontAwesome Icons for modern purple neon theme -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Premium Purple-Black Mix Effects & Smooth Motion Animations */
+        body {
+            background-color: #0B0A0F;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .neon-border-left {
+            box-shadow: -8px 0 25px -5px rgba(147, 51, 234, 0.4);
+        }
+        .neon-border-right {
+            box-shadow: 8px 0 25px -5px rgba(147, 51, 234, 0.4);
+        }
+        .smooth-motion {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .smooth-motion:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(168, 85, 247, 0.6);
+        }
+        .glow-text {
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+        }
+        /* Welcome Overlay Pop In Motion */
+        @keyframes slideInUp {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .welcome-toast {
+            animation: slideInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+<body class="neon-border-left neon-border-right min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+
+    <!-- WELCOME NOTIFICATION FEATURE -->
+    <div id="welcomeBanner" class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-900 to-black border border-purple-500 p-4 rounded-xl shadow-2xl flex items-center gap-4 max-w-sm welcome-toast">
+        <div class="bg-purple-600 p-3 rounded-full text-white text-xl animate-bounce">
+            <i class="fas fa-hand-sparkles"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-white text-sm tracking-wide">Welcome to DesignedDev Studio!</h4>
+            <p class="text-xs text-gray-300 mt-1">Let's build a premium digital asset for your unique brand presence.</p>
+        </div>
+        <button onclick="document.getElementById('welcomeBanner').remove()" class="text-gray-400 hover:text-white text-lg font-bold ml-2">&times;</button>
+    </div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="border-b border-purple-900/40 bg-black/60 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="https://i.ibb.co/Q7YddFdL/file-0000000082a08211be685e414e2c7915.png" class="w-8 h-8 object-contain rounded-lg" alt="DesignedDev Logo" onerror="this.style.display='none'; document.getElementById('header-text-fallback').style.display='block';">
+            <span id="header-text-fallback" class="hidden w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-sm shadow-[0_0_15px_rgba(147,51,234,0.5)]">DD</span>
+            <span class="font-bold tracking-tight text-lg text-white">DesignedDev<span class="text-purple-500"> Studio</span></span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+            <a href="#services" class="hover:text-purple-400 transition">Services</a>
+            <a href="#portfolio" class="hover:text-purple-400 transition">Portfolio</a>
+            <a href="#pricing" class="hover:text-purple-400 transition">Pricing</a>
+            <a href="#contact" class="hover:text-purple-400 transition">Contact</a>
+        </nav>
+        <button onclick="openModal('General Project', 'Custom Setup', 'Contact Us')" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-lg shadow-purple-600/30 transition">Order Now</button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative px-6 py-20 text-center max-w-4xl mx-auto flex flex-col items-center justify-center">
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <span class="border border-purple-500/30 bg-purple-950/40 text-purple-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide glow-text uppercase"><i class="fas fa-bolt mr-2"></i>Fast 2-Day Premium Turnaround</span>
+        
+        <!-- BRAND LOGO BADGE IN HERO SECTION -->
+        <div class="mb-6 max-w-md mx-auto p-4 bg-black/40 border border-purple-900/30 rounded-2xl shadow-xl backdrop-blur-sm">
+            <img src="https://i.ibb.co/Q7YddFdL/file-0000000082a08211be685e414e2c7915.png" class="w-full h-auto object-contain max-h-48 rounded-xl" alt="DesignedDev Studio Identity Badge">
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+            Professional Design That Makes <br><span class="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-400 bg-clip-text text-transparent">Your Brand Stand Out</span>
+        </h1>
+        <p class="text-gray-400 text-base sm:text-lg mb-8 max-w-2xl leading-relaxed">
+            DesignedDev Studio designs modern logos, high-conversion UI/UX setups, and rapid websites globally. Clean minimalist visual workflows delivered direct from lead expert Muhammad Numan.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#portfolio" class="bg-white/10 hover:bg-white/15 text-white font-semibold px-6 py-3 rounded-lg border border-white/10 transition flex items-center gap-2"><i class="fas fa-images"></i> View Portfolio</a>
+            <a href="https://wa.me/923478868887" target="_blank" class="bg-[#25D366] hover:bg-[#20ba56] text-white font-semibold px-6 py-3 rounded-lg transition flex items-center gap-2"><i class="fab fa-whatsapp text-lg"></i> Contact WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- SERVICES BRIEF -->
+    <section id="services" class="py-16 px-6 max-w-7xl mx-auto border-t border-purple-950/40">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white tracking-tight">Our Elite Capabilities</h2>
+            <p class="text-gray-400 text-sm mt-2">Tailored assets built cleanly from raw scratch blueprints.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="border border-purple-900/30 bg-gradient-to-b from-purple-950/20 to-black p-8 rounded-2xl smooth-motion text-center">
+                <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center mx-auto text-xl mb-4"><i class="fas fa-bullseye"></i></div>
+                <h3 class="text-xl font-bold text-white mb-2">Logo Identity</h3>
+                <p class="text-gray-400 text-sm mb-4">Distinct custom vectors tailored directly to separate your niche market presence cleanly.</p>
+                <a href="#pricing" class="text-purple-400 text-sm font-semibold hover:underline">View Tier Matrices &rarr;</a>
+            </div>
+            <div class="border border-purple-900/30 bg-gradient-to-b from-purple-950/20 to-black p-8 rounded-2xl smooth-motion text-center">
+                <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center mx-auto text-xl mb-4"><i class="fas fa-desktop"></i></div>
+                <h3 class="text-xl font-bold text-white mb-2">UI/UX Interfaces</h3>
+                <p class="text-gray-400 text-sm mb-4">High fidelity conversion pathways engineered flawlessly in Figma platforms for immediate integration.</p>
+                <a href="#pricing" class="text-purple-400 text-sm font-semibold hover:underline">View Tier Matrices &rarr;</a>
+            </div>
+            <div class="border border-purple-900/30 bg-gradient-to-b from-purple-950/20 to-black p-8 rounded-2xl smooth-motion text-center">
+                <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center mx-auto text-xl mb-4"><i class="fas fa-globe"></i></div>
+                <h3 class="text-xl font-bold text-white mb-2">Web Development</h3>
+                <p class="text-gray-400 text-sm mb-4">Blazing fast responsive layouts optimized cleanly for SEO dominance across search landscapes effortlessly.</p>
+                <a href="#pricing" class="text-purple-400 text-sm font-semibold hover:underline">View Tier Matrices &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERFECT 12 PORTFOLIO PIECES -->
+    <section id="portfolio" class="py-16 px-6 max-w-7xl mx-auto border-t border-purple-950/40 bg-black/40 rounded-3xl border border-purple-900/20 p-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white tracking-tight">Recent Studio Showcases</h2>
+            <p class="text-gray-400 text-sm mt-2">Comprehensive 4x4 matrix displays breaking down premium functional concepts.</p>
+        </div>
+
+        <!-- 4 LOGO DESIGNS (UPDATED WITH REAL IMAGES BY USER) -->
+        <h3 class="text-purple-400 font-bold text-lg mb-6 border-b border-purple-900/40 pb-2"><i class="fas fa-bullseye mr-2"></i> Custom Identity Blueprint Samples (4)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="bg-black border border-purple-950 p-4 rounded-xl smooth-motion flex flex-col justify-between">
+                <div class="aspect-video w-full overflow-hidden rounded-lg border border-purple-900/40 mb-4 bg-zinc-900">
+                    <img src="https://i.ibb.co/DgDsYCLd/LUXORA-v2.png" class="w-full h-full object-cover" alt="Luxora Fine Jewelry Logo">
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Luxora — Fine Jewelry</h4>
+                    <p class="text-gray-400 text-xs mt-1">Elegant integrated ring wordmark identity structure.</p>
+                </div>
+            </div>
+            <div class="bg-black border border-purple-950 p-4 rounded-xl smooth-motion flex flex-col justify-between">
+                <div class="aspect-video w-full overflow-hidden rounded-lg border border-purple-900/40 mb-4 bg-zinc-900">
+                    <img src="https://i.ibb.co/zhtKJ56W/IMG-20260729-222542.png" class="w-full h-full object-cover" alt="Century Spice Coffee Logo">
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Century Spice Coffee</h4>
+                    <p class="text-gray-400 text-xs mt-1">Botanical sustainable natural organic framework asset.</p>
+                </div>
+            </div>
+            <div class="bg-black border border-purple-950 p-4 rounded-xl smooth-motion flex flex-col justify-between">
+                <div class="aspect-video w-full overflow-hidden rounded-lg border border-purple-900/40 mb-4 bg-zinc-900">
+                    <img src="https://i.ibb.co/7MGmB7d/SBH-Logo.jpg" class="w-full h-full object-cover" alt="Surge Bath House Logo">
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Surge Bath House</h4>
+                    <p class="text-gray-400 text-xs mt-1">Fire-and-water combined premium beachfront recovery system.</p>
+                </div>
+            </div>
+            <div class="bg-black border border-purple-950 p-4 rounded-xl smooth-motion flex flex-col justify-between">
+                <div class="aspect-video w-full overflow-hidden rounded-lg border border-purple-900/40 mb-4 bg-zinc-900">
+                    <img src="https://i.ibb.co/dJ1JhsgQ/IMG-20260729-WA1352.jpg" class="w-full h-full object-cover" alt="Velorra Haus Logo">
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Velorra Haus</h4>
+                    <p class="text-gray-400 text-xs mt-1">Geometric vector gold emblems structured safely.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 UI/UX DESIGNS -->
+        <h3 class="text-purple-400 font-bold text-lg mb-6 border-b border-purple-900/40 pb-2"><i class="fas fa-desktop mr-2"></i> High-Fidelity Interface Assets (4)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-blue-600/20 to-black border border-blue-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/Mk3GCV16/Luxuarios-1.png" class="w-full h-full object-cover" alt="Furniture Store Flow UI Design">
+                </div>
+                <h4 class="font-bold text-white">Furniture Store Flow</h4>
+                <p class="text-gray-400 text-xs mt-1">Connected collection-to-cart conversion funnel frames.</p>
+            </div>
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-pink-600/20 to-black border border-pink-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/VWRDmJwC/file-000000009df88211a35d801bde0ea9cf.png" class="w-full h-full object-cover" alt="Product Card System UI Design">
+                </div>
+                <h4 class="font-bold text-white">Product Card System</h4>
+                <p class="text-gray-400 text-xs mt-1">Feature-led dynamic benefit system hooks built cleanly.</p>
+            </div>
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-teal-600/20 to-black border border-teal-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/qM5K3s6c/mobiluxe-x-theme-4000px.jpg" class="w-full h-full object-cover" alt="Brand UI System Design">
+                </div>
+                <h4 class="font-bold text-white">Brand UI System</h4>
+                <p class="text-gray-400 text-xs mt-1">Figma tokens, layout frameworks, and custom iconography kits.</p>
+            </div>
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-red-600/20 to-black border border-red-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/9mfxpSmH/file-00000000eeb4820695883bee13cd37d1.png" class="w-full h-full object-cover" alt="Minimal Product UI Design">
+                </div>
+                <h4 class="font-bold text-white">Minimal Product UI</h4>
+                <p class="text-gray-400 text-xs mt-1">Zero clutter visual presentation grids maximizing conversions.</p>
+            </div>
+        </div>
+
+        <!-- 4 WEB DESIGNS -->
+        <h3 class="text-purple-400 font-bold text-lg mb-6 border-b border-purple-900/40 pb-2"><i class="fas fa-globe mr-2"></i> Production Web Applications (4)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-purple-900/40 to-black border border-purple-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/0VF4HCxJ/file-000000007d0482118596e36c6e68ab64.png" class="w-full h-full object-cover" alt="Basic Marketplace Web Design">
+                </div>
+                <h4 class="font-bold text-white">Basic Marketplace</h4>
+                <p class="text-gray-400 text-xs mt-1">Clean functional ecommerce essentials engineered cleanly.</p>
+            </div>
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-indigo-900/40 to-black border border-indigo-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/spnt6FDW/file-0000000067f88207aeb93ab61832d787.png" class="w-full h-full object-cover" alt="Standard Retail Hero Web Design">
+                </div>
+                <h4 class="font-bold text-white">Standard Retail Hero</h4>
+                <p class="text-gray-400 text-xs mt-1">Polished presentation structures built for retail growth.</p>
+            </div>
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-slate-900/40 to-black border border-slate-600/30 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/fddzYqP2/file-000000009afc8207b61ceca015210f26.png" class="w-full h-full object-cover" alt="Professional Website Web Design">
+                </div>
+                <h4 class="font-bold text-white">Professional Website</h4>
+                <p class="text-gray-400 text-xs mt-1">Multi-section high-trust brand storytelling layouts.</p>
+            </div>
+            <div class="bg-black border border-purple-950 p-5 rounded-xl smooth-motion">
+                <div class="aspect-video bg-gradient-to-br from-neutral-900 to-black border border-neutral-700 rounded-lg overflow-hidden mb-4">
+                    <img src="https://i.ibb.co/HffqXgX2/file-000000008b6082079e4581a488672d25.png" class="w-full h-full object-cover" alt="Luxury Swiss Watch Web Design">
+                </div>
+                <h4 class="font-bold text-white">Luxury Swiss Watch</h4>
+                <p class="text-gray-400 text-xs mt-1">Ultra luxury dark modes tailored to maximize brand signaling.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING PACKAGES MATRIX -->
+    <section id="pricing" class="py-16 px-6 max-w-7xl mx-auto border-t border-purple-950/40">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white tracking-tight">Transparent Pricing Matrices</h2>
+            <p class="text-gray-400 text-sm mt-2">Pick an asset class setup below to launch your dedicated instance.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- LOGO PACK -->
+            <div class="border border-purple-900/40 bg-black/60 p-6 rounded-2xl flex flex-col justify-between smooth-motion relative">
+                <div>
+                    <h4 class="text-purple-400 font-bold uppercase tracking-wider text-xs mb-2">🎯 Logo Pack</h4>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-3xl font-extrabold text-white">$59.99</span>
+                        <span class="text-gray-500 text-sm line-through">$92</span>
+                        <span class="bg-purple-600/20 text-purple-400 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-500/30">35% OFF</span>
+                    </div>
+                    <ul class="text-gray-400 text-sm mt-4 space-y-2.5 border-t border-purple-950 pt-4">
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> 3 Custom Concept Blueprints</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Vector Source Files (AI/SVG)</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> 4 Comprehensive Revision Passes</li>
+                    </ul>
+                </div>
+                <button onclick="openModal('Logo Design', 'Popular Professional Pack', '$59.99')" class="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition">Order Pack</button>
+            </div>
+            <!-- UI/UX PACK -->
+            <div class="border border-purple-500 bg-gradient-to-b from-purple-950/40 to-black p-6 rounded-2xl flex flex-col justify-between smooth-motion relative shadow-[0_0_30px_rgba(147,51,234,0.2)]">
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Most Popular</span>
+                <div>
+                    <h4 class="text-purple-400 font-bold uppercase tracking-wider text-xs mb-2">🖥 UI/UX Pro Page</h4>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-3xl font-extrabold text-white">$149.99</span>
+                        <span class="text-gray-500 text-sm line-through">$231</span>
+                        <span class="bg-purple-600/20 text-purple-400 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-500/30">35% OFF</span>
+                    </div>
+                    <ul class="text-gray-400 text-sm mt-4 space-y-2.5 border-t border-purple-950 pt-4">
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Up to 5 Responsive Application Screens</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Interactive Figma Handoff Files</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Pro Style Guide Tokens Shipped</li>
+                    </ul>
+                </div>
+                <button onclick="openModal('UI/UX Design', 'Website UI Pack', '$149.99')" class="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition">Order Pack</button>
+            </div>
+            <!-- WEB PACK -->
+            <div class="border border-purple-900/40 bg-black/60 p-6 rounded-2xl flex flex-col justify-between smooth-motion relative">
+                <div>
+                    <h4 class="text-purple-400 font-bold uppercase tracking-wider text-xs mb-2">🌐 Full Stack Development</h4>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-3xl font-extrabold text-white">$249.99</span>
+                        <span class="text-gray-500 text-sm line-through">$385</span>
+                        <span class="bg-purple-600/20 text-purple-400 text-[10px] font-bold px-2 py-1 rounded-full border border-purple-500/30">35% OFF</span>
+                    </div>
+                    <ul class="text-gray-400 text-sm mt-4 space-y-2.5 border-t border-purple-950 pt-4">
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> 5 Pages Pure Clean Core Layouts</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> 100% Mobile Fluid Optimization</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> SEO Dominance & Schema Mappings</li>
+                    </ul>
+                </div>
+                <button onclick="openModal('Web Design', 'Web Design Package', '$249.99')" class="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition">Order Pack</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- REAL-WORLD VERIFIED REVIEWS SECTION -->
+    <section class="py-16 px-6 max-w-5xl mx-auto border-t border-purple-950/40">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-white">Client Success Stories</h2>
+            <p class="text-gray-400 text-xs mt-1">Verified project output feedback metrics globally.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="bg-black/40 border border-purple-950 p-6 rounded-xl">
+                <div class="flex items-center gap-1 text-yellow-500 text-sm mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 text-sm italic">"Outstanding delivery pacing! Muhammad restructured our luxury ecommerce branding pipeline inside 48 hours flawlessly."</p>
+                <h5 class="text-white font-bold text-xs mt-4 tracking-wide">- Sarah M., Founder Gilded-Wear</h5>
+            </div>
+            <div class="bg-black/40 border border-purple-950 p-6 rounded-xl">
+                <div class="flex items-center gap-1 text-yellow-500 text-sm mb-3">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 text-sm italic">"Highly fluid communication paths. Source vector outputs were exceptionally well-organized and modular."</p>
+                <h5 class="text-white font-bold text-xs mt-4 tracking-wide">- David K., Operations Lead Core-Tech</h5>
+            </div>
+        </div>
+    </section>
+
+    <!-- DYNAMIC LIVE FORM MODAL COMPONENT -->
+    <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-gradient-to-b from-purple-950/80 to-[#0B0A0F] border border-purple-500 max-w-lg w-full rounded-2xl shadow-2xl p-6 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl font-bold transition">&times;</button>
+            <h3 class="text-xl font-bold text-white mb-2"><i class="fas fa-shopping-cart text-purple-400 mr-2"></i> Launch Your Project Order</h3>
+            <p class="text-gray-400 text-xs mb-4">No payments are collected now. Data maps directly onto verified validation scripts.</p>
+
+            <!-- SUCCESS CONFIRMATION PANEL (shown after live submission) -->
+            <div id="orderSuccessPanel" class="hidden text-center py-8">
+                <div class="w-16 h-16 mx-auto rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-green-400 text-3xl mb-4">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h4 class="text-white font-bold text-lg mb-2">✅ Order Submitted Successfully!</h4>
+                <p class="text-gray-400 text-sm">Our support team will contact you shortly.</p>
+            </div>
+
+            <!-- LIVE FORMSPREE PIPELINE HOOK -->
+            <form id="orderForm" action="https://formspree.io/f/xrpzoerl" method="POST" target="hiddenFormTarget" class="space-y-4">
+                <input type="hidden" name="_replyto" value="numannisar25@gmail.com">
+                <input type="hidden" name="_subject" value="New DesignedDev Studio Order Form Entry Received!">
+
+                <div>
+                    <label class="block text-gray-300 text-xs font-semibold mb-1">Your Full Name *</label>
+                    <input type="text" name="Client Name" required class="w-full bg-black/60 border border-purple-900/60 rounded-lg p-2 text-white text-sm focus:border-purple-500 outline-none" placeholder="e.g. John Doe">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 text-xs font-semibold mb-1">Email Address *</label>
+                        <input type="email" name="Email Address" required class="w-full bg-black/60 border border-purple-900/60 rounded-lg p-2 text-white text-sm focus:border-purple-500 outline-none" placeholder="name@company.com">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-xs font-semibold mb-1">WhatsApp / Telegram Contacts *</label>
+                        <input type="text" name="Instant Messenger App Contact Line" required class="w-full bg-black/60 border border-purple-900/60 rounded-lg p-2 text-white text-sm focus:border-purple-500 outline-none" placeholder="+123456789">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-gray-300 text-xs font-semibold mb-1">Core Service</label>
+                        <select id="modalService" name="Target Asset Segment Selection" class="w-full bg-black border border-purple-900 rounded-lg p-2 text-white text-xs outline-none focus:border-purple-500" onchange="syncPriceDropdown()">
+                            <option value="Logo Design">Logo Design</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Web Design">Web Design</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-xs font-semibold mb-1">Package Tier</label>
+                        <input type="text" id="modalPackage" name="Selected Structural Tier Package Tier" readonly class="w-full bg-purple-950/40 border border-purple-900 text-purple-300 rounded-lg p-2 text-xs font-semibold text-center cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-xs font-semibold mb-1">Price Matrix</label>
+                        <input type="text" id="modalPrice" name="Locked Price Point Valuation Matrix" readonly class="w-full bg-purple-950/40 border border-purple-900 text-purple-300 rounded-lg p-2 text-xs font-bold text-center cursor-not-allowed">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-300 text-xs font-semibold mb-1">Brief Project Requirements *</label>
+                    <textarea name="Project Brief Requirements Scope Notes" rows="3" required class="w-full bg-black/60 border border-purple-900/60 rounded-lg p-2 text-white text-xs focus:border-purple-500 outline-none" placeholder="Describe the style, colors, and features you want..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm py-3 rounded-xl transition shadow-lg shadow-purple-600/30">Submit Secure Order &rarr;</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HIDDEN TARGET IFRAME: lets the order form POST live without leaving/reloading the page -->
+    <iframe name="hiddenFormTarget" id="hiddenFormTarget" style="display:none"></iframe>
+
+    <!-- CONTACT FOOTER MATRIX -->
+    <footer id="contact" class="bg-black border-t border-purple-900/40 px-6 py-12 text-center">
+        <div class="max-w-4xl mx-auto space-y-6">
+            <h3 class="text-xl font-bold text-white tracking-tight">Let's Initialize Your Setup</h3>
+            <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400">
+                <a href="https://wa.me/923478868887" target="_blank" class="hover:text-purple-400 transition flex items-center gap-2"><i class="fab fa-whatsapp text-[#25D366]"></i> +92 347 8868887</a>
+                <a href="mailto:numannisar25@gmail.com" class="hover:text-purple-400 transition flex items-center gap-2"><i class="fas fa-envelope text-purple-400"></i> numannisar25@gmail.com</a>
+                <span class="flex items-center gap-2"><i class="fab fa-telegram text-blue-400"></i> @Numii81st</span>
+            </div>
+            <p class="text-xs text-gray-600 border-t border-purple-950/40 pt-6">&copy; 2026 DesignedDev Studio. All rights reserved. Managed Securely via Direct Validation Routes.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT VALIDATIONS CONTROLLER -->
+    <script>
+        function openModal(service, packName, price) {
+            document.getElementById('orderForm').reset();
+            document.getElementById('modalService').value = service;
+            document.getElementById('modalPackage').value = packName;
+            document.getElementById('modalPrice').value = price;
+            document.getElementById('orderForm').classList.remove('hidden');
+            document.getElementById('orderSuccessPanel').classList.add('hidden');
+            document.getElementById('orderModal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('orderModal').classList.add('hidden');
+        }
+
+        // LIVE FORM SUBMISSION: posts the order to numannisar25@gmail.com via Formspree using a
+        // hidden iframe target (works reliably even when this file is opened locally, unlike fetch()
+        // which browsers block with CORS errors for local/content:// files). No page reload happens.
+        const orderForm = document.getElementById('orderForm');
+        const hiddenFrame = document.getElementById('hiddenFormTarget');
+        let formSubmitting = false;
+
+        orderForm.addEventListener('submit', function () {
+            formSubmitting = true;
+            const submitBtn = orderForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Submitting...';
+        });
+
+        hiddenFrame.addEventListener('load', function () {
+            // Ignore the very first blank load of the iframe on page load
+            if (!formSubmitting) return;
+            formSubmitting = false;
+            orderForm.classList.add('hidden');
+            document.getElementById('orderSuccessPanel').classList.remove('hidden');
+            const submitBtn = orderForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Submit Secure Order &rarr;';
+        });
+        function syncPriceDropdown() {
+            const svc = document.getElementById('modalService').value;
+            let pName = "Custom Setup";
+            let val = "\$99.99";
+            if (svc === "Logo Design") { pName = "Popular Professional Pack"; val = "\$59.99"; }
+            else if (svc === "UI/UX Design") { pName = "Website UI Pack"; val = "\$149.99"; }
+            else if (svc === "Web Design") { pName = "Web Design Package"; val = "\$249.99"; }
+            document.getElementById('modalPackage').value = pName;
+            document.getElementById('modalPrice').value = val;
+        }
+    </script>
+</body>
+</html>
