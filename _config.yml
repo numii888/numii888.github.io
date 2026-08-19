@@ -1,5 +1,6 @@
 title: DesignedDev Studio
 description: Logo, UI/UX & Web Design Blog
 theme: minima
+url: "https://numii888.github.io"
 plugins:
   - jekyll-sitemap
