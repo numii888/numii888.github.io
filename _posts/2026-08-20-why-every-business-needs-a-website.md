@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why Every Small Business Needs a Professional Website in 2026"
-date: 2026-08-21
+date: 2026-08-20
 ---
 
 In 2026, if your business doesn't have a website, it might as well not exist for a huge chunk of your potential customers. Social media pages help, but they're not enough on their own. Here's why a professional website is no longer optional — it's essential.
