@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Minimalist vs Detailed Logos: Which One Works Best?"
-date: 2026-08-22
+date: 2026-08-21
 ---
 
 When designing a logo, one of the biggest decisions a business faces is choosing between a minimalist style or a more detailed, illustrative one. Both approaches can work — but they serve different purposes, and picking the wrong one for your brand can hurt recognition and scalability.
