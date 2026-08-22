@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | DesignedDev Studio</title>
+    <meta name="description" content="Meet DesignedDev Studio — a design studio led by Muhammad Numan, building logos, UI/UX, and websites for businesses worldwide.">
+    <meta name="keywords" content="about DesignedDev Studio, design studio, logo UI UX web designer">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        body { background-color: #0B0A0F; color: #F3F4F6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .neon-border-left { box-shadow: -8px 0 25px -5px rgba(147, 51, 234, 0.4); }
+        .neon-border-right { box-shadow: 8px 0 25px -5px rgba(147, 51, 234, 0.4); }
+        .smooth-motion { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .smooth-motion:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 15px 30px -10px rgba(168, 85, 247, 0.6); }
+        .glow-text { text-shadow: 0 0 12px rgba(168, 85, 247, 0.6); }
+    </style>
+</head>
+<body class="neon-border-left neon-border-right min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+
+    <header class="border-b border-purple-900/40 bg-black/60 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="https://i.ibb.co/Q7YddFdL/file-0000000082a08211be685e414e2c7915.png" class="w-8 h-8 object-contain rounded-lg" alt="DesignedDev Logo" onerror="this.style.display='none'; document.getElementById('header-text-fallback').style.display='block';">
+            <span id="header-text-fallback" class="hidden w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-sm shadow-[0_0_15px_rgba(147,51,234,0.5)]">DD</span>
+            <a href="/index.html" class="font-bold tracking-tight text-lg text-white">DesignedDev<span class="text-purple-500"> Studio</span></a>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+            <a href="/index.html#services" class="hover:text-purple-400 transition">Services</a>
+            <a href="/index.html#portfolio" class="hover:text-purple-400 transition">Portfolio</a>
+            <a href="/index.html#pricing" class="hover:text-purple-400 transition">Pricing</a>
+            <a href="/index.html#contact" class="hover:text-purple-400 transition">Contact</a>
+            <a href="/blog.html" class="hover:text-purple-400 transition">Blog</a>
+        </nav>
+        <a href="https://wa.me/923478868887" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-lg shadow-purple-600/30 transition">Order Now</a>
+    </header>
+
+    <section class="relative px-6 py-20 text-center max-w-4xl mx-auto flex flex-col items-center justify-center">
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <span class="border border-purple-500/30 bg-purple-950/40 text-purple-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide glow-text uppercase"><i class="fas fa-users mr-2"></i>About Us</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+            Design Work <br><span class="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-400 bg-clip-text text-transparent">Built to Perform</span>
+        </h1>
+        <p class="text-gray-400 text-base sm:text-lg mb-8 max-w-2xl leading-relaxed">
+            DesignedDev Studio is a design and development studio led by Muhammad Numan, helping businesses launch with a logo, interface, and website that actually work together — not just look good separately.
+        </p>
+    </section>
+
+    <section class="py-16 px-6 max-w-4xl mx-auto border-t border-purple-950/40">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-4">Why We Started</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">Too many small businesses end up with a logo from one place, a website from another, and no one making sure the two match. DesignedDev Studio was built to close that gap — one studio handling identity, interface, and site as a single, connected package.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Every project starts with the same question: what does this business actually need to look trustworthy and convert visitors? Not what looks trendy this month.</p>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-white mb-4">How We Work</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">Clean, scratch-built assets — no recycled templates. Every logo, interface, and site is designed around the specific brand it's for, then delivered fast: most logo projects wrap up in 2 days.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Clients get direct communication throughout — no long approval chains, no guessing where a project stands.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 px-6 max-w-3xl mx-auto text-center border-t border-purple-950/40">
+        <h2 class="text-3xl font-bold text-white mb-4">Let's Talk About Your Project</h2>
+        <p class="text-gray-400 mb-8">Message us on WhatsApp and tell us what you're building — we'll get back to you with next steps.</p>
+        <a href="https://wa.me/923478868887" target="_blank" class="bg-[#25D366] hover:bg-[#20ba56] text-white font-semibold px-8 py-3.5 rounded-lg transition inline-flex items-center gap-2"><i class="fab fa-whatsapp text-lg"></i> Contact WhatsApp</a>
+    </section>
+
+    <footer class="border-t border-purple-900/40 bg-black/60 px-6 py-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 DesignedDev Studio. All rights reserved.</p>
+    </footer>
+</body>
+</html>
