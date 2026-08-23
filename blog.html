@@ -1,13 +1,70 @@
 ---
-layout: default
+layout: null
 title: Blog
 ---
-<h1 style="padding: 40px; color: white;">Our Blog</h1>
-<ul style="padding: 0 40px; list-style: none;">
-  {% for post in site.posts %}
-    <li style="margin-bottom: 20px;">
-      <a href="{{ post.url }}" style="color: #a855f7; font-size: 20px; text-decoration: none;">{{ post.title }}</a>
-      <p style="color: #ccc; margin: 5px 0;">{{ post.date | date: "%B %d, %Y" }}</p>
-    </li>
-  {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | DesignedDev Studio</title>
+    <meta name="description" content="Design and development insights from DesignedDev Studio — logo design, UI/UX, and web development tips.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        body { background-color: #0B0A0F; color: #F3F4F6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .neon-border-left { box-shadow: -8px 0 25px -5px rgba(147, 51, 234, 0.4); }
+        .neon-border-right { box-shadow: 8px 0 25px -5px rgba(147, 51, 234, 0.4); }
+        .smooth-motion { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .smooth-motion:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 15px 30px -10px rgba(168, 85, 247, 0.6); }
+        .glow-text { text-shadow: 0 0 12px rgba(168, 85, 247, 0.6); }
+    </style>
+</head>
+<body class="neon-border-left neon-border-right min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+
+    <header class="border-b border-purple-900/40 bg-black/60 backdrop-blur-md sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="https://i.ibb.co/Q7YddFdL/file-0000000082a08211be685e414e2c7915.png" class="w-8 h-8 object-contain rounded-lg" alt="DesignedDev Logo" onerror="this.style.display='none'; document.getElementById('header-text-fallback').style.display='block';">
+            <span id="header-text-fallback" class="hidden w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-sm shadow-[0_0_15px_rgba(147,51,234,0.5)]">DD</span>
+            <a href="/index.html" class="font-bold tracking-tight text-lg text-white">DesignedDev<span class="text-purple-500"> Studio</span></a>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+            <a href="/index.html#services" class="hover:text-purple-400 transition">Services</a>
+            <a href="/index.html#portfolio" class="hover:text-purple-400 transition">Portfolio</a>
+            <a href="/index.html#pricing" class="hover:text-purple-400 transition">Pricing</a>
+            <a href="/about.html" class="hover:text-purple-400 transition">About</a>
+            <a href="/faq.html" class="hover:text-purple-400 transition">FAQ</a>
+            <a href="/contact.html" class="hover:text-purple-400 transition">Contact</a>
+            <a href="/blog.html" class="text-purple-400 transition">Blog</a>
+        </nav>
+        <a href="https://wa.me/923478868887" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-lg shadow-purple-600/30 transition">Order Now</a>
+    </header>
+
+    <section class="relative px-6 py-20 text-center max-w-4xl mx-auto flex flex-col items-center justify-center">
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <span class="border border-purple-500/30 bg-purple-950/40 text-purple-400 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide glow-text uppercase"><i class="fas fa-newspaper mr-2"></i>Our Blog</span>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+            Design & Development <br><span class="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-400 bg-clip-text text-transparent">Insights</span>
+        </h1>
+        <p class="text-gray-400 text-base sm:text-lg mb-8 max-w-2xl leading-relaxed">
+            Tips, guides, and thinking from DesignedDev Studio on logo design, UI/UX, and building websites that actually convert.
+        </p>
+    </section>
+
+    <section class="py-8 px-6 max-w-4xl mx-auto border-t border-purple-950/40 grid grid-cols-1 gap-5 pb-20">
+        {% for post in site.posts %}
+        <a href="{{ post.url }}" class="border border-purple-900/30 bg-gradient-to-b from-purple-950/20 to-black p-6 rounded-2xl smooth-motion block">
+            <h2 class="text-xl font-bold text-white mb-2">{{ post.title }}</h2>
+            <p class="text-gray-500 text-xs mb-3"><i class="far fa-calendar mr-1"></i> {{ post.date | date: "%B %d, %Y" }}</p>
+            <span class="text-purple-400 text-sm font-semibold">Read More &rarr;</span>
+        </a>
+        {% endfor %}
+    </section>
+
+    <footer class="border-t border-purple-900/40 bg-black/60 px-6 py-8 text-center text-sm text-gray-500">
+        <p>&copy; 2026 DesignedDev Studio. All rights reserved.</p>
+    </footer>
+</body>
+</html>
