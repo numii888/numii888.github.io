@@ -5,7 +5,17 @@
 <title>SENTRA AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#02070d;--c:#19e6ff;--t:#12b8a6;--g:#2bff88;--r:#ff3b4a;--a:#ffb62e;--tx:#cfefff;--dim:#6fa3b5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (max-width: 768px) {
+    .satellite-feed, .ship-radar, .agent-workspace-alex {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        display: block !important;
+    }
+    body {
+        padding: 10px;
+    }
+  }
+  :root{--bg:#02070d;--c:#19e6ff;--t:#12b8a6;--g:#2bff88;--r:#ff3b4a;--a:#ffb62e;--tx:#cfefff;--dim:#6fa3b5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:60px;scroll-behavior:smooth}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--tx);font:13px 'Share Tech Mono',ui-monospace,monospace;overflow-x:hidden}
@@ -338,4 +348,63 @@ msg('SENTRA','Tap the mic and speak. Try "open radar" or "introduce yourself".',
 setTimeout(()=>{const b=$('#boot');b.style.opacity=0;setTimeout(()=>b.remove(),500)},900);
 $('#pSat h2 span').onclick=$('#pRad h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('radar');$('#pTown h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('agents');
 $('#bLang').onclick=()=>openSheet('lang');try{const sv=localStorage.getItem('sentra-lang');if(sv&&sv!='en')setLang(sv)}catch(e){}
-</script></body></html>
+</script>
+<!-- </body> tag se bilkul pehle yeh paste karein -->
+<script>
+// 1. Google Gemini Key Parameter (Apni real key yahan enter karein)
+const SENTRA_KEY = "AQ.Ab8RN6KsU_g8j0LGFbPBpBwuGcgXPnA4L7p3aMPgoUAxjDKtEQ"; 
+const COMPUTE_URL = `https://googleapis.com{AQ.Ab8RN6KsU_g8j0LGFbPBpBwuGcgXPnA4L7p3aMPgoUAxjDKtEQ}`w; 
+// 2. Element Selectors mapping onto your Sentra UI layout
+const micControlNode = document.querySelector('.voice-agent-notes .mic-icon') || document.querySelector('🎙️') || document.getElementById('micBtn');
+const feedbackMonitorNode = document.querySelector('.processing-text') || document.querySelector('.agent-workspace-alex p');
+
+// 3. Audio listener setup for Chrome on mobile
+if (micControlNode) {
+    micControlNode.addEventListener('click', () => {
+        if (feedbackMonitorNode) feedbackMonitorNode.innerText = "[SYSTEM]: LISTENING SENSOR ON...";
+        
+        const SystemSpeechEngine = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SystemSpeechEngine) {
+            let promptFallback = prompt("Mic blocked. Enter diagnostic sequence manually:");
+            if(promptFallback) pushToSentraCore(promptFallback);
+            return;
+        }
+
+        const audioInterpreter = new SystemSpeechEngine();
+        audioInterpreter.lang = 'en-US';
+        audioInterpreter.start();
+
+        audioInterpreter.onresult = async (payload) => {
+            const vocalString = payload.results.transcript;
+            if (feedbackMonitorNode) feedbackMonitorNode.innerText = `[PARSING]: "${vocalString}"`;
+            await pushToSentraCore(vocalString);
+        };
+
+        audioInterpreter.onerror = () => {
+            if (feedbackMonitorNode) feedbackMonitorNode.innerText = "[CRITICAL]: INPUT READ TIMEOUT";
+        };
+    });
+}
+
+// 4. Autonomous transmission logic
+async function pushToSentraCore(extractedCommand) {
+    try {
+        const structuralPayload = await fetch(COMPUTE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: `Act as Sentra AI, a high-tech medical studio dashboard proxy ecosystem. Provide highly structured tactical responses to: ${extractedCommand}` }] }]
+            })
+        });
+        const operationalData = await structuralPayload.json();
+        const finalAIString = operationalData.candidates.content.parts.text;
+        
+        if (feedbackMonitorNode) {
+            feedbackMonitorNode.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">[SENTRA-AI]:</span> ${finalAIString}`;
+        }
+    } catch (fault) {
+        if (feedbackMonitorNode) feedbackMonitorNode.innerText = "[ERROR]: SERVER PROTOCOL HANDSHAKE FAILED";
+    }
+}
+</script>
+</body></html>
