@@ -352,8 +352,10 @@ $('#bLang').onclick=()=>openSheet('lang');try{const sv=localStorage.getItem('sen
     
 <script>
 // 1. Google Gemini Key Parameter
-const SENTRA_KEY = "AQ.Ab8RN6KsU_g8j0LGFbPBpBwuGcgXPnA4L7p3aMPgoUAxjDKtEQ"; 
-const COMPUTE_URL = `https://googleapis.com{AQ.Ab8RN6KsU_g8j0LGFbPBpBwuGcgXPnA4L7p3aMPgoUAxjDKtEQ}`w; 
+const SENTRA_KEY = "AQ_AB8rNKSU_g8jOLGfPBpDmuGcXpNa4L7p3aWpoUAXjDktEQ";
+const BASE_PATH = "https://googleapis.com";
+const COMPUTE_URL = BASE_PATH + SENTRA_KEY;
+    
 // 2. Element Selectors mapping onto your Sentra UI layout
 const micControlNode = document.querySelector('.voice-agent-notes .mic-icon') || document.getElementById('micBtn') || document.querySelector('.mic-icon');
 const feedbackMonitorNode = document.querySelector('.processing-text') || document.querySelector('.agent-workspace-alex p');
