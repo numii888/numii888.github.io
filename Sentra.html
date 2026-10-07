@@ -326,30 +326,7 @@ cv.onpointermove=e=>{const p=ps.get(e.pointerId);if(!p)return;const dx=e.clientX
 if(ps.size==2){const[a,b]=[...ps.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);wz=Math.max(.35,Math.min(2.5,wz*d/pd));pd=d}else{const k=(cam.right-cam.left)/cv.clientWidth/cam.zoom;tgt.x=Math.max(-6,Math.min(6,tgt.x-dx*k));tgt.z=Math.max(-10,Math.min(10,tgt.z-dy*k/.925));want.copy(tgt)}};
 cv.onpointerup=e=>{if(ps.size==1&&mvd<8){const r=cv.getBoundingClientRect();sel(pick(e.clientX-r.left,e.clientY-r.top))}ps.delete(e.pointerId);if(!ps.size)drag=false};cv.onpointercancel=e=>{ps.delete(e.pointerId);drag=false};
 $('#zi').onclick=()=>wz=Math.min(2.5,wz*1.3);$('#zo').onclick=()=>wz=Math.max(.35,wz/1.3);$('#zc').onclick=()=>{sel(null);want.set(0,0,0);wz=.6}})();
-/* ===== VOICE ===== */
-(function(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition,TXT={IDLE:'IDLE — tap the mic',LISTENING:'LISTENING… speak now',PROCESSING:'PROCESSING command…',SPEAKING:'SPEAKING response'},MC={IDLE:'25,230,255',LISTENING:'43,255,136',PROCESSING:'255,182,46',SPEAKING:'25,230,255'};
-let rec,stream,actx,an,buf,got=false;
-function mode(m){VO.mode=m;$('#st').textContent=TXT[m];$('#mic').className=m;$('#mic').textContent=m=='IDLE'?'🎙':m=='LISTENING'?'●':m=='PROCESSING'?'…':'🔊'}
-async function mic(){try{stream=await navigator.mediaDevices.getUserMedia({audio:true});actx=new(window.AudioContext||window.webkitAudioContext)();an=actx.createAnalyser();an.fftSize=256;actx.createMediaStreamSource(stream).connect(an);buf=new Uint8Array(an.fftSize)}catch(e){stream=null}}
-function stopMic(){stream&&stream.getTracks().forEach(t=>t.stop());stream=null;actx&&actx.close().catch(()=>{});actx=an=null;VO.level=0}
-function speak(t,done){const L=LG();if(!SET.sound||!window.speechSynthesis){setTimeout(done,Math.min(3500,t.length*25));return}const vs=speechSynthesis.getVoices(),pv=vs.find(v=>v.lang.replace('_','-').toLowerCase().startsWith(L.sr.slice(0,2).toLowerCase()));if(!pv&&vs.length){toast('No '+L.en+' voice on this device');setTimeout(done,1500);return}const u=new SpeechSynthesisUtterance(t);u.lang=L.sr;if(pv)u.voice=pv;u.onend=u.onerror=done;speechSynthesis.cancel();speechSynthesis.speak(u)}
-async function handle(txt){stopMic();mode('PROCESSING');msg('You',txt,1,'#vlog');msg('You',txt,1);const r=await API.processVoiceCommand(txt);msg('SENTRA',r,0,'#vlog');msg('SENTRA · '+AG.list[AG.cur].n,r);wsUpdate();mode('SPEAKING');speak(r,()=>VO.mode=='SPEAKING'&&mode('IDLE'))}
-async function start(){mode('LISTENING');got=false;await mic();
-if(!SR){msg('SYSTEM','Speech recognition unavailable in this browser — type in the workspace. Mic level still shown.',0,'#vlog');setTimeout(()=>{stopMic();mode('IDLE')},3500);return}
-rec=new SR();rec.lang=LG().sr;rec.interimResults=false;rec.onresult=e=>{got=true;handle(e.results[0][0].transcript)};rec.onerror=e=>{if(!got){stopMic();mode('IDLE');msg('SYSTEM','Voice error: '+e.error+(e.error=='language-not-supported'?' — no speech input for '+LG().en+' here; type instead':''),0,'#vlog')}};rec.onend=()=>{if(VO.mode=='LISTENING'&&!got){stopMic();mode('IDLE')}};try{rec.start()}catch(e){mode('IDLE')}}
-$('#mic').onclick=()=>{const m=VO.mode;if(m=='IDLE')start();else if(m=='LISTENING'){rec&&rec.abort();stopMic();mode('IDLE')}else if(m=='SPEAKING'){window.speechSynthesis&&speechSynthesis.cancel();mode('IDLE')}};
-let pt;$('#mic').onpointerdown=()=>{pt=setTimeout(()=>{toast('Hold the mic to cancel; tap to talk');},700)};$('#mic').onpointerup=()=>clearTimeout(pt);
-const c=$('#wv'),x=c.getContext('2d');let W,H;fit(c,d=>{W=c.clientWidth;H=c.clientHeight;x.setTransform(d,0,0,d,0,0)});
-tasks.push(t=>{if(an){an.getByteTimeDomainData(buf);let s=0;for(const b of buf)s+=Math.abs(b-128);VO.level+=(Math.min(1,s/buf.length/128*5)-VO.level)*.4}if(!vis.pVoice)return;x.clearRect(0,0,W,H);const n=34,bw=W/n,m=VO.mode;x.fillStyle='rgb('+MC[m]+')';x.shadowColor=x.fillStyle;x.shadowBlur=6;
-for(let i=0;i<n;i++){let a=m=='LISTENING'?(stream?VO.level:.35)*(.5+.5*Math.sin(t*9+i*.7))+.06:m=='PROCESSING'?.15+.15*Math.abs(Math.sin(t*5-i*.5)):m=='SPEAKING'?.2+.45*Math.abs(Math.sin(t*7+i*.9)*Math.sin(t*3+i)):.05+.03*Math.sin(t*2+i*.5);const h=Math.max(3,a*H);x.fillRect(i*bw+1,(H-h)/2,bw-2,h)}x.shadowBlur=0});
-$$('[data-v]').forEach(b=>b.onclick=()=>{$$('[data-v]').forEach(z=>z.classList.toggle('on',z==b));const k=b.dataset.v;$('#vv').style.display=k=='voice'?'':'none';$('#va').style.display=k=='agent'?'':'none';$('#vn').style.display=k=='notes'?'':'none';if(k=='agent'){const a=AG.list[AG.cur];$('#va').innerHTML='<div class="m"><small>CURRENT AGENT</small><b style="color:'+a.css+'">'+a.n+'</b> · '+a.role+'<br>Status: '+(a.on?'ONLINE':'OFFLINE')+'<br>Task: '+a.tasks[a.ti]+'<br>Module: '+API.mod+'</div>'}});
-try{$('#nt').value=localStorage.getItem('sentra-notes')||''}catch(e){}$('#nt').oninput=e=>{try{localStorage.setItem('sentra-notes',e.target.value)}catch(_){}};
-msg('SENTRA','Tap the mic and speak. Try "open radar" or "introduce yourself".',0,'#vlog');mode('IDLE')})();
-setTimeout(()=>{const b=$('#boot');b.style.opacity=0;setTimeout(()=>b.remove(),500)},900);
-$('#pSat h2 span').onclick=$('#pRad h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('radar');$('#pTown h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('agents');
-$('#bLang').onclick=()=>openSheet('lang');try{const sv=localStorage.getItem('sentra-lang');if(sv&&sv!='en')setLang(sv)}catch(e){}
-</script>
-    
+
 <script>
 // 1. Google Gemini Key Parameter
 const SENTRA_KEY = "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";
