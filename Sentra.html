@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+2<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -400,21 +400,7 @@ const LANGS = [
 ["tr", "Türkçe", "Turkish", "Ana Sayfa|Radar|Ajanlar|Sohbet|Profil", "SENTRA'ya yazın…", "Emrinizdeyim efendim.", "tr-TR"],
 ["hi", "हिन्दी", "Hindi", "होम|रडार|एजेंट|चैट|प्रोफ़ाइल", "SENTRA को लिखें…", "आपकी सेवा में हाज़िर हूँ।", "hi-IN"],
 ["fa", "فارسی", "Farsi", "خانه|رادار|عاملها|گفتگو|پروفایل", "SENTRA به بنویسید…", "در خدمتم قربان.", "fa-IR"]
-];
-  
-,"ته ولیکئ...", "ستاسو خدمت ته حاضر یم۔ SENTRA ","کور|رادار|اجنټان|چیټ|پروفایل" ,"Pashto ","پښتو" ,"ps["
-"ps-AF"],
-["ru", "Русский", "Russian", "Главная|Радар|Агенты|Чат|Профиль", "Напишите
-SENTRA…", "К вашим услугам.", "ru-RU"],
-["zh", "中文", "Chinese", "主页|雷达|代理|聊天|个人", "输入给 SENTRA…", "随时为您效劳。
-", "zh-CN"],
-["tr", "Türkçe", "Turkish", "Ana Sayfa|Radar|Ajanlar|Sohbet|Profil", "SENTRA'ya yazın…",
-"Emrinizdeyim efendim.", "tr-TR"],
-["hi", "हि न्दी", "Hindi", "होम|रडार|एजेंट|चटै |प्रोफ़ाइल", "SENTRA को लि खें…", "आपकी सेवा मेंहाज़ि र
-हूँ।", "hi-IN"],
-["IR-fa ",".بنویسید...", "در خدمتم قربان SENTRA خانه|رادار|عاملها|گفتگو|پروفایل", "به" ,"Farsi ","فارسی" ,"fa["
-];
-const LG = () => { const x = LANGS.find(y => y[0] == SET.lang) || LANGS[0]; return { code:
+wconst LG = () => { const x = LANGS.find(y => y[0] == SET.lang) || LANGS[0]; return { code:
 x[0], nat: x[1], en: x[2], nav: x[3].split('|'), ph: x[4], hello: x[5], sr: x[6] }; };
 function setLang(c) {
 if (!LANGS.some(x => x[0] == c)) return;
@@ -547,8 +533,7 @@ tasks.push((t, dt) => { if (vis.pTown) ren.render(sc, cam); });
 (function () {
 $('#mic').onclick = () => toast('Mic activated. Speak command...');
 })();
-setTimeout(() => { const b = $('#boot'); if (b) { b.style.opacity = 0; setTimeout(() =>
-b.remove(), 500); } }, 900);
+const b = $('#boot'); if (b) b.remove();
 try { const sv = localStorage.getItem('sentra-lang'); if (sv) setLang(sv); } catch (e) {}
 </script>
 </body>
