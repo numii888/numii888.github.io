@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+w<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark"><meta name="theme-color" content="#02070d">
@@ -352,9 +352,8 @@ $('#bLang').onclick=()=>openSheet('lang');try{const sv=localStorage.getItem('sen
     
 <script>
 // 1. Google Gemini Key Parameter
-const SENTRA_KEY = "AQ.Ab8RN6Ifj5ozpcmRwhEcTWLfAb316Nu7od64ihyOEQ5EdPVSug";
-const BASE_PATH = "https://googleapis.com";
-const COMPUTE_URL = BASE_PATH + SENTRA_KEY;
+const SENTRA_KEY = "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";
+const COMPUTE_URL = "https://openrouter.ai";
     
 // 2. Element Selectors mapping onto your Sentra UI layout
 const micControlNode = document.querySelector('.voice-agent-notes .mic-icon') || document.getElementById('micBtn') || document.querySelector('.mic-icon');
@@ -388,24 +387,29 @@ if (micControlNode) {
     });
 }
 
-// 4. Autonomous transmission logic
 async function pushToSentraCore(extractedCommand) {
     try {
         const structuralPayload = await fetch(COMPUTE_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + SENTRA_KEY,
+                "HTTP-Referer": "https://github.io",
+                "X-Title": "Sentra AI Studio"
+            },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: `Act as Sentra AI, a high-tech medical studio dashboard proxy ecosystem. Provide highly structured tactical responses to: ${extractedCommand}` }] }]
+                model: "meta-llama/llama-3-8b-instruct:free", 
+                messages: [{ role: "user", content: `Act as Sentra AI, a high-tech tactical medical dashboard engine. Answer very briefly in max 2 sentences: ${extractedCommand}` }]
             })
         });
         const operationalData = await structuralPayload.json();
-        const finalAIString = operationalData.candidates.content.parts.text;
+        const finalAIString = operationalData.choices[0].message.content;
         
         if (feedbackMonitorNode) {
             feedbackMonitorNode.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">[SENTRA-AI]:</span> ${finalAIString}`;
         }
     } catch (fault) {
-        if (feedbackMonitorNode) feedbackMonitorNode.innerText = "[ERROR]: SERVER PROTOCOL HANDSHAKE FAILED";
+        if (feedbackMonitorNode) feedbackMonitorNode.innerText = "[ERROR]: OPENROUTER CLUID HANDSHAKE FAILED";
     }
 }
 </script>
