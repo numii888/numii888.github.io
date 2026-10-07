@@ -349,13 +349,13 @@ setTimeout(()=>{const b=$('#boot');b.style.opacity=0;setTimeout(()=>b.remove(),5
 $('#pSat h2 span').onclick=$('#pRad h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('radar');$('#pTown h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('agents');
 $('#bLang').onclick=()=>openSheet('lang');try{const sv=localStorage.getItem('sentra-lang');if(sv&&sv!='en')setLang(sv)}catch(e){}
 </script>
-<!-- </body> tag se bilkul pehle yeh paste karein -->
+    
 <script>
-// 1. Google Gemini Key Parameter (Apni real key yahan enter karein)
+// 1. Google Gemini Key Parameter
 const SENTRA_KEY = "AQ.Ab8RN6KsU_g8j0LGFbPBpBwuGcgXPnA4L7p3aMPgoUAxjDKtEQ"; 
 const COMPUTE_URL = `https://googleapis.com{AQ.Ab8RN6KsU_g8j0LGFbPBpBwuGcgXPnA4L7p3aMPgoUAxjDKtEQ}`w; 
 // 2. Element Selectors mapping onto your Sentra UI layout
-const micControlNode = document.querySelector('.voice-agent-notes .mic-icon') || document.querySelector('🎙️') || document.getElementById('micBtn');
+const micControlNode = document.querySelector('.voice-agent-notes .mic-icon') || document.getElementById('micBtn') || document.querySelector('.mic-icon');
 const feedbackMonitorNode = document.querySelector('.processing-text') || document.querySelector('.agent-workspace-alex p');
 
 // 3. Audio listener setup for Chrome on mobile
