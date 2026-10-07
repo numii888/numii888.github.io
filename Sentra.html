@@ -392,10 +392,16 @@ x.fillStyle = 'rgba(25,230,255,.5)'; P.forEach(p => { p.y -= p.v * dt; if (p.y <
 x.beginPath(); x.arc(p.x * W, p.y * H, p.r * DPR(), 0, TAU); x.fill(); }); });
 })();
 const LANGS = [
-["en", "English", "English", "Home|Radar|Agents|Chat|Profile", "Type to SENTRA…", "At your
-service, Sir.", "en-US"],
-,"کو لکھیں...", "حکم کیجیے، جناب۔ SENTRA ","ہوم|ریڈار|ایجنٹس|چیٹ|پروفائل" ,"Urdu ","اردو" ,"ur["
-"ur-PK"],
+["en", "English", "English", "Home|Radar|Agents|Chat|Profile", "Type to SENTRA…", "At your service, Sir.", "en-US"],
+["ur", "اردو", "Urdu", "ہوم|ریڈار|ایجنٹس|چیٹ|پروفائل", "SENTRA کو لکھیں…", "حکم کیجیے، جناب۔", "ur-PK"],
+["ps", "پښتو", "Pashto", "کور|رادار|اجنټان|چیټ|پروفایل", "SENTRA ته ولیکئ…", "ستاسو خدمت ته حاضر یم.", "ps-AF"],
+["ru", "Русский", "Russian", "Главная|Радар|Агенты|Чат|Профиль", "Напишите SENTRA…", "К вашим услугам.", "ru-RU"],
+["zh", "中文", "Chinese", "主页|雷达|代理|聊天|个人", "输入给 SENTRA…", "随时为您效劳。", "zh-CN"],
+["tr", "Türkçe", "Turkish", "Ana Sayfa|Radar|Ajanlar|Sohbet|Profil", "SENTRA'ya yazın…", "Emrinizdeyim efendim.", "tr-TR"],
+["hi", "हिन्दी", "Hindi", "होम|रडार|एजेंट|चैट|प्रोफ़ाइल", "SENTRA को लिखें…", "आपकी सेवा में हाज़िर हूँ।", "hi-IN"],
+["fa", "فارسی", "Farsi", "خانه|رادار|عاملها|گفتگو|پروفایل", "SENTRA به بنویسید…", "در خدمتم قربان.", "fa-IR"]
+];
+  
 ,"ته ولیکئ...", "ستاسو خدمت ته حاضر یم۔ SENTRA ","کور|رادار|اجنټان|چیټ|پروفایل" ,"Pashto ","پښتو" ,"ps["
 "ps-AF"],
 ["ru", "Русский", "Russian", "Главная|Радар|Агенты|Чат|Профиль", "Напишите
