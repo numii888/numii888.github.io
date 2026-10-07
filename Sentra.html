@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#02070d">
+<title>SENTRA AI</title>
+<link
+href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+M
+ono&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #02070d;
+--c: #19e6ff;
+--t: #12b8a6;
+--g: #2bff88;
+--r: #ff3b4a;
+--a: #ffb62e;
+--tx: #cfefff;
+--dim: #6fa3b5;
+box-sizing: border-box;
+padding-top: env(safe-area-inset-top, 0px);
+padding-bottom: env(safe-area-inset-bottom, 0px);
+}html { scroll-padding-top: 60px; scroll-behavior: smooth; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+margin: 0; background: var(--bg); color: var(--tx);
+font: 13px 'Share Tech Mono', ui-monospace, monospace; overflow-x: hidden;
+}
+body:after {
+content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 40;
+background: repeating-linear-gradient(0deg, rgba(25, 230, 255, 0.035) 0 1px, transparent
+1px 3px);
+}
+body.noscan:after { display: none; }
+#bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
+#app { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 60px 10px
+84px; }
+#bar {
+position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+padding: calc(6px + env(safe-area-inset-top, 0px)) 8px 6px;
+display: flex; align-items: center; gap: 6px; background: rgba(2, 9, 15, 0.92);
+border-bottom: 1px solid rgba(25, 230, 255, 0.35); max-width: 480px; margin: 0 auto;
+}
+.logo { font: 700 16px Orbitron, sans-serif; letter-spacing: 0.08em; white-space: nowrap; flex:
+1; text-shadow: 0 0 10px var(--c); }
+.logo b { color: var(--c); }
+.ib {
+min-width: 40px; height: 40px; border: 1px solid rgba(25, 230, 255, 0.5);
+border-radius: 10px; background: rgba(25, 230, 255, 0.07); color: var(--c);
+font: inherit; font-size: 16px; cursor: pointer;
+}
+.ib:active, .btn:active { background: rgba(25, 230, 255, 0.3); }
+.chip { display: flex; align-items: center; gap: 5px; padding: 6px 9px; border: 1px solid
+rgba(43, 255, 136, 0.5); border-radius: 8px; font-size: 12px; color: var(--g); }
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--g); box-shadow: 0 0
+8px var(--g); }
+.chip.off { color: var(--r); border-color: var(--r); }
+.chip.off i { background: var(--r); box-shadow: 0 0 8px var(--r); }
+.ind { font-size: 12px; color: var(--c); white-space: nowrap; }
+.panel {
+position: relative; margin: 10px 0; padding: 10px;
+border: 1px solid rgba(25, 230, 255, 0.45); border-radius: 14px;
+background: linear-gradient(160deg, rgba(8, 30, 44, 0.82), rgba(3, 12, 20, 0.92));
+box-shadow: 0 0 14px rgba(25, 230, 255, 0.18), inset 0 0 18px rgba(25, 230, 255, 0.06);
+}
+.panel h2 {
+margin: 0 0 8px; font: 700 13px Orbitron, sans-serif; letter-spacing: 0.08em;
+color: var(--c); display: flex; justify-content: space-between; align-items: center; gap: 6px;
+}
+.badge { font: 12px 'Share Tech Mono',a monospaace; border: 1px solid var(--g); color: var(--g);padding: 3px 7px; border-radius: 6px; }
+.btn { min-height: 44px; border: 1px solid rgba(25, 230, 255, 0.5); border-radius: 10px;
+background: rgba(25, 230, 255, 0.07); color: var(--tx); font: inherit; padding: 0 10px; cursor:
+pointer; }
+.btn.on { background: rgba(25, 230, 255, 0.28); color: #fff; box-shadow: 0 0 10px rgba(25,
+230, 255, 0.5); }
+.row { display: flex; gap: 6px; } .row > * { flex: 1; min-width: 0; }
+canvas { display: block; width: 100%; }
+#satc { height: 190px; border: 1px solid rgba(25, 230, 255, 0.3); border-radius: 8px;
+touch-action: manipulation; transition: height 0.3s; }
+#pSat.big #satc { height: 340px; }
+.sub { display: flex; justify-content: space-between; color: var(--dim); font-size: 11px; margin:
+6px 0; }
+#rwrap { position: relative; width: 100%; aspect-ratio: 1; }
+#rcw { position: absolute; inset: 9%; }
+#rc { width: 100%; height: 100%; touch-action: manipulation; }
+.bl { position: absolute; font-size: 10px; color: var(--c); transform: translate(-50%, -50%);
+pointer-events: none; }
+.tl { position: absolute; left: 0; top: 0; font-size: 9px; white-space: nowrap; pointer-events:
+none; text-shadow: 0 0 4px #000; }
+#rd { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+#rd div { border: 1px solid rgba(25, 230, 255, 0.3); border-radius: 8px; padding: 5px;
+text-align: center; font-size: 11px; color: var(--dim); }
+#rd b { display: block; color: var(--tx); font-size: 13px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.card4 { min-height: 56px; display: flex; align-items: center; gap: 8px; font: 700 12px Orbitron,
+sans-serif; letter-spacing: 0.06em; text-align: left; }
+.card4 i { font-style: normal; font-size: 20px; }
+#townw { position: relative; }
+#townc { height: 300px; touch-action: none; border: 1px solid rgba(25, 230, 255, 0.3);
+border-radius: 8px; }
+.zc { position: absolute; right: 6px; top: 6px; display: flex; flex-direction: column; gap: 6px; }
+#chips { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 8px; padding-bottom: 2px; }
+.ac { flex: 0 0 auto; min-height: 40px; display: flex; align-items: center; gap: 6px; padding: 0
+10px; }
+.ac i { width: 9px; height: 9px; border-radius: 50%; }
+#ainfo { position: absolute; left: 6px; right: 6px; bottom: 6px; padding: 10px; border: 1px solid
+var(--c); border-radius: 12px; background: rgba(2, 12, 20, 0.94); display: none; box-shadow: 0 0
+16px rgba(25, 230, 255, 0.4); }
+#ainfo.on { display: block; animation: up 0.25s; }
+.bar { height: 6px; border-radius: 3px; background: rgba(25, 230, 255, 0.15); overflow: hidden;
+margin: 4px 0; }
+.bar i { display: block; height: 100%; background: var(--c); transition: width 0.6s; }
+.stats { display: flex; gap: 10px; font-size: 11px; color: var(--dim); margin-top: 8px; align-items:
+center; }
+.stats .bar { flex: 1; }
+#log, #vlog { height: 210px; overflow-y: auto; overscroll-behavior: contain; display: flex;
+flex-direction: column; gap: 6px; }.m { border: 1px solid rgba(25, 230, 255, 0.3); border-radius: 10px; padding: 7px 9px;
+background: rgba(25, 230, 255, 0.04); line-height: 1.35; animation: up 0.25s; }
+.m small { display: block; color: var(--c); font-size: 10px; margin-bottom: 2px; }
+.m.u { border-color: rgba(43, 255, 136, 0.4); } .m.u small { color: var(--g); }
+.inp { display: flex; gap: 6px; margin-top: 8px; }
+.inp input, textarea { flex: 1; min-width: 0; height: 44px; border: 1px solid rgba(25, 230, 255,
+0.45); border-radius: 10px; background: rgba(0, 0, 0, 0.4); color: var(--tx); padding: 0 10px; font:
+16px 'Share Tech Mono', monospace; }
+textarea { height: 210px; padding: 8px; width: 100%; }
+.dots { display: none; color: var(--a); font-size: 12px; margin-top: 4px; }
+.dots.on { display: block; animation: bl 1s infinite; }
+.mod { font-size: 11px; color: var(--dim); border: 1px solid rgba(25, 230, 255, 0.25);
+border-radius: 8px; padding: 5px 8px; margin-bottom: 8px; display: flex; justify-content:
+space-between; }
+.tabs { display: flex; gap: 4px; margin-bottom: 8px; }
+.tabs button { flex: 1; min-height: 40px; }
+#st { text-align: center; font: 700 12px Orbitron, sans-serif; letter-spacing: 0.1em; margin: 8px
+0 4px; color: var(--c); }
+#wv { height: 56px; }
+#mic { display: block; margin: 6px auto 0; width: 76px; height: 76px; border-radius: 50%;
+border: 2px solid var(--c); background: radial-gradient(circle, rgba(25, 230, 255, 0.3), rgba(25,
+230, 255, 0.05)); color: var(--c); font-size: 30px; cursor: pointer; box-shadow: 0 0 22px rgba(25,
+230, 255, 0.5); animation: pl 2s infinite; }
+#mic.LISTENING { border-color: var(--g); color: var(--g); box-shadow: 0 0 28px var(--g); }
+#mic.PROCESSING { border-color: var(--a); color: var(--a); box-shadow: 0 0 28px var(--a); }
+#nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; z-index:
+20; display: flex; background: rgba(2, 9, 15, 0.95); border-top: 1px solid rgba(25, 230, 255, 0.4);
+padding-bottom: env(safe-area-inset-bottom, 0px); }
+#nav button { flex: 1; min-height: 60px; border: 0; background: none; color: var(--dim); font:
+11px 'Share Tech Mono', monospace; cursor: pointer; }
+#nav button i { display: block; font-style: normal; font-size: 20px; }
+#nav button.on { color: var(--c); text-shadow: 0 0 10px var(--c); background:
+linear-gradient(0deg, rgba(25, 230, 255, 0.18), transparent); }
+#sheet { position: fixed; inset: 0; z-index: 50; display: none; align-items: flex-end; background:
+rgba(0, 0, 0, 0.65); }
+#sheet.on { display: flex; }
+#sc { width: 100%; max-width: 480px; margin: 0 auto; max-height: 82vh; overflow: auto;
+padding: 8px 14px calc(18px + env(safe-area-inset-bottom, 0px)); border: 1px solid var(--c);
+border-radius: 18px 18px 0 0; background: #041018; animation: up 0.28s; box-shadow: 0 0
+24px rgba(25, 230, 255, 0.4); }
+.grab { width: 50px; height: 5px; border-radius: 3px; background: var(--c); margin: 4px auto
+12px; touch-action: none; }
+#sc h3 { font: 700 15px Orbitron, sans-serif; color: var(--c); margin: 0 0 10px; }
+.li { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height:
+44px; border-bottom: 1px solid rgba(25, 230, 255, 0.15); }
+.sw { width: 46px; height: 26px; border-radius: 13px; border: 1px solid var(--c); background:
+none; position: relative; cursor: pointer; flex: none; }
+.sw:after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;border-radius: 50%; background: var(--dim); transition: 0.2s; }
+.sw.on { background: rgba(25, 230, 255, 0.3); }
+.sw.on:after { left: 23px; background: var(--c); }
+#toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); z-index: 60;
+background: #041018; border: 1px solid var(--c); border-radius: 10px; padding: 8px 12px;
+opacity: 0; transition: opacity 0.3s; pointer-events: none; max-width: 90%; text-align: center; }
+#toast.on { opacity: 1; }
+#boot { position: fixed; inset: 0; z-index: 99; background: var(--bg); display: flex; align-items:
+center; justify-content: center; font: 700 16px Orbitron, sans-serif; color: var(--c); letter-spacing:
+0.2em; transition: opacity 0.5s; animation: bl 1s infinite; }
+@keyframes up { from { transform: translateY(24px); opacity: 0; } }
+@keyframes bl { 50% { opacity: 0.5; } }
+@keyframes pl { 50% { box-shadow: 0 0 34px rgba(25, 230, 255, 0.8); } }
+@media (max-width: 380px) { .logo { font-size: 14px; } .chip { padding: 5px 6px; } #nav button
+{ font-size: 10px; } }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+:root { padding: 0; }
+#app { position: fixed; left: 0; right: 0; top: calc(52px + env(safe-area-inset-top, 0px)); bottom:
+calc(60px + env(safe-area-inset-bottom, 0px)); max-width: 480px; margin: 0 auto; padding: 6px;
+display: grid; gap: 6px; }
+#app > * { min-height: 0; min-width: 0; margin: 0; }
+.panel { display: flex; flex-direction: column; padding: 6px; overflow: hidden; border-radius:
+12px; }
+.panel h2 { font-size: 10px; margin: 0 0 4px; }
+.cw, #townw { position: relative; flex: 1; min-height: 0; }
+#satc, #townc { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rbox { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
+container-type: size; }
+#rwrap { width: min(100cqw, 100cqh); height: min(100cqw, 100cqh); aspect-ratio: auto; }
+#pSat { grid-area: sat; } #pRad { grid-area: rad; } .cards { grid-area: cards; } #pTown {
+grid-area: town; } #pWork { grid-area: work; } #pVoice { grid-area: voice; }
+.card4 { flex-direction: column; justify-content: center; gap: 0; font-size: 9px; min-height: 44px;
+padding: 0 2px; text-align: center; }
+.card4 i { font-size: 16px; }
+.cards { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+#bRng, #bExp { min-height: 26px !important; font-size: 10px; padding: 0 6px; }
+#log { height: auto; flex: 1; min-height: 0; } #vlog { height: 90px; } textarea { height: 90px; }
+#last { display: none; font-size: 11px; line-height: 1.3; max-height: 44px; overflow: hidden;
+margin-bottom: 4px; }
+.ac { min-height: 30px; padding: 0 8px; font-size: 11px; } .stats { margin-top: 4px; font-size:
+10px; }
+#ainfo { padding: 8px; }
+[data-v=home] #app { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0, 34%)
+46px minmax(0, 1fr) auto; grid-template-areas: "sat rad" "cards cards" "town town" "work voice";
+}
+[data-v=home] :is(#pSat .sub, #bExp, #rd, .mod, #log, .tabs, #vv, #va, #vn, #sm, .bl:not(.q), .tl,
+#pRad .sub span:last-child, .dots) { display: none; }
+[data-v=home] #last { display: block; } [data-v=home] .inp { margin-top: 0; } [data-v=home] .inpinput { height: 38px; } [data-v=home] .inp .ib { height: 38px; }
+[data-v=home] #st { font-size: 9px; margin: 2px 0; } [data-v=home] #wv { height: 22px; }
+[data-v=home] #mic { width: 46px; height: 46px; font-size: 18px; margin-top: 2px; }
+[data-v=radar] #app { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 150px;
+grid-template-areas: "rad" "sat"; }
+body[data-v=radar][data-sat] #app { grid-template-rows: 150px minmax(0, 1fr);
+grid-template-areas: "sat" "rad"; }
+[data-v=agents] #app { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr);
+grid-template-areas: "town"; }
+[data-v=chat] #app { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto;
+grid-template-areas: "work" "voice"; }
+[data-v=radar] :is(.cards, #pTown, #pWork, #pVoice, #pSat .sub), [data-v=agents] :is(#pSat,
+#pRad, .cards, #pWork, #pVoice), [data-v=chat] :is(#pSat, #pRad, .cards, #pTown) { display:
+none; }
+#rot { display: none; position: fixed; inset: 0; z-index: 98; background: var(--bg); align-items:
+center; justify-content: center; text-align: center; color: var(--c); font: 700 14px Orbitron,
+sans-serif; }
+@media (orientation: landscape) and (max-height: 520px) { #rot { display: flex; } }
+#rot { display: none !important; }
+@media (orientation: landscape) and (min-width: 560px) {
+#bar, #app { max-width: none; } #nav { display: none; } #bar { padding-top: calc(3px +
+env(safe-area-inset-top, 0px)); padding-bottom: 3px; } #bar .ib { height: 36px; }
+#app { top: calc(44px + env(safe-area-inset-top, 0px)); bottom: env(safe-area-inset-bottom,
+0px); }
+body[data-v] #app { grid-template-columns: 1fr 1.7fr 1fr; grid-template-rows: 44px minmax(0,
+1fr) minmax(0, 1fr); grid-template-areas: "sat cards work" "sat town work" "rad town voice"; }
+body[data-v=home] #pWork :is(#log, .mod) { display: flex; } body[data-v=home] #pWork #last
+{ display: none; } body[data-v=home] #pSat #sm { display: flex; }
+}
+.cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+</style>
+</head>
+<body data-v="home">
+<div id="boot">SENTRA AI</div>
+<canvas id="bg"></canvas>
+<header id="bar">
+<button class="ib" id="bMenu" aria-label="Menu">☰</button>
+<div class="logo">SENTRA <b>AI</b></div>
+<span class="chip" id="cOn"><i></i><span>Online</span></span>
+<button class="ib" id="bLang" aria-label="Language">🌐</button>
+<span class="ind" id="cNet" style="display:none">📶</span>
+<span class="ind" id="cBat">--</span>
+<button class="ib" id="bProf" aria-label="Profile">☻</button>
+</header>
+<main id="app">
+<section class="panel" id="pSat">
+<h2><span>SATELLITE FEED <span style="color:var(--g)">●</span></span><buttonclass="btn" id="bExp" style="min-height:36px">EXPAND</button></h2>
+<div class="cw"><canvas id="satc"></canvas></div>
+<div class="sub"><span id="ll">LAT 34.05°N LON 71.52°E</span><span
+style="color:var(--g)">SAT-1 ONLINE · LIVE</span></div>
+<div class="row" id="sm">
+<button class="btn on" data-m="map">Map</button>
+<button class="btn" data-m="thermal">Thermal</button>
+<button class="btn" data-m="ir">IR</button>
+<button class="btn" data-m="scan">Scan</button>
+<button class="btn" data-m="more">Labels</button>
+</div>
+</section>
+<section class="panel" id="pRad">
+<h2><span>SHIP-RADAR</span><button class="btn" id="bRng"
+style="min-height:36px">RNG 240 km</button></h2>
+<div class="rbox"><div id="rwrap"><div id="rcw"><canvas
+id="rc"></canvas></div></div></div>
+<div id="rd">
+<div>BRG<b id="rB">--</b></div>
+<div>RNG<b id="rR">--</b></div>
+<div>ALT<b id="rA">--</b></div>
+<div>SPD<b id="rS">--</b></div>
+</div>
+<div class="sub"><span id="rT">Tap a target · long-press to track</span><span>OWN
+12.4kn 3,200ft</span></div>
+</section>
+<section class="cards">
+<button class="btn card4" data-s="memory"><i>◈</i>MEMORY</button>
+<button class="btn card4" data-s="skills"
+style="border-color:var(--g)"><i>✦</i>SKILLS</button>
+<button class="btn card4" data-s="character"
+style="border-color:var(--r)"><i>☺</i>CHARACTER</button>
+<button class="btn card4" data-s="settings"><i>⚙</i>SETTINGS</button>
+</section>
+<section class="panel" id="pTown">
+<h2><span>AGENT TOWN</span><span class="badge">READY</span></h2>
+<div id="chips"></div>
+<div id="townw">
+<canvas id="townc"></canvas>
+<div class="zc">
+<button class="ib" id="zi">+</button>
+<button class="ib" id="zo">−</button>
+<button class="ib" id="zc">⌖</button>
+</div>
+<div id="ainfo"></div></div>
+<div class="stats">
+<span id="onl" style="color:var(--g)">ONLINE 3/4</span>
+CPU<span class="bar"><i id="cpu"></i></span>
+MEM<span class="bar"><i id="mem"></i></span>
+</div>
+</section>
+<section class="panel" id="pWork">
+<h2><span>AGENT WORKSPACE</span><span id="wag"
+style="color:var(--dim)">ALEX</span></h2>
+<div class="mod"><span id="wmod">Module: idle</span><span id="wtask"></span></div>
+<div id="log"></div>
+<div id="last"></div>
+<div class="dots" id="dots">● PROCESSING…</div>
+<div class="inp">
+<input id="ci" dir="auto" placeholder="Type to SENTRA…" autocomplete="off">
+<button class="ib" id="cs">➤</button>
+</div>
+</section>
+<section class="panel" id="pVoice">
+<div class="tabs">
+<button class="btn on" data-v="voice">VOICE</button>
+<button class="btn" data-v="agent">AGENT</button>
+<button class="btn" data-v="notes">NOTES</button>
+</div>
+<div id="vv"><div id="vlog"></div></div>
+<div id="va" style="display:none"></div>
+<div id="vn" style="display:none"><textarea id="nt"
+placeholder="Notes…"></textarea></div>
+<div id="st">IDLE — tap the mic</div>
+<canvas id="wv"></canvas>
+<button id="mic" aria-label="Microphone">🎙</button>
+</section>
+</main>
+<nav id="nav">
+<button data-n="home" class="on"><i>⌂</i>Home</button>
+<button data-n="radar"><i>◎</i>Radar</button>
+<button data-n="agents"><i>⚑</i>Agents</button>
+<button data-n="chat"><i>✉</i>Chat</button>
+<button data-n="profile"><i>☻</i>Profile</button>
+</nav>
+<div id="sheet"><div id="sc"></div></div>
+<div id="toast"></div>
+<div id="rot">⟳<br>ROTATE TO PORTRAIT</div><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)], sleep
+= ms => new Promise(r => setTimeout(r, ms)), RN = (a, b) => a + Math.random() * (b - a), TAU =
+Math.PI * 2;
+/* ===== STATE ===== */
+const SET = { scan: true, particles: true, sound: true, lowpower: false, range: 240, persona:
+'Tactical', lang: 'en' };
+const RAD = { targets: [], sel: null }; const MAPEV = [], REG = { europe: [10, 50], asia: [100,
+35], "middle east": [45, 28], africa: [20, 5], "north america": [-100, 40], "south america": [-60, -15],
+australia: [134, -25], pakistan: [70, 30] }; const VO = { mode: 'IDLE', level: 0 }; const NAV = { cur:
+'home' };
+const MEM = ['Primary sector: Malakand', 'Daily brief at 08:00', 'Prefers dark HUD themes'];
+const SKILLS = [['Desktop control', 1], ['File management', 1], ['Communications', 1],
+['Research', 0]];
+const AG = {
+sel: null, cur: 0, list: [
+{ n: 'Alex', role: 'Security Lead', c: 0x19e6ff, css: '#19e6ff', on: 1, tasks: ['Scanning
+perimeter', 'Auditing access logs', 'Patrolling sector 4'] },
+{ n: 'Gerri', role: 'Research Analyst', c: 0x2bff88, css: '#2bff88', on: 1, tasks: ['Indexing
+satellite data', 'Summarizing reports', 'Cross-checking sources'] },
+{ n: 'Nova', role: 'Comms Officer', c: 0xffb62e, css: '#ffb62e', on: 1, tasks: ['Routing
+messages', 'Drafting briefings', 'Syncing channels'] },
+{ n: 'Rex', role: 'Support Engineer', c: 0x9a7bff, css: '#9a7bff', on: 0, tasks: ['Standing by',
+'Maintaining systems', 'Updating firmware'] }
+]
+};
+AG.list.forEach(a => { a.ti = 0; a.act = RN(40, 90); });
+/* ===== RENDER LOOP ===== */
+const tasks = [], vis = {}; let last = 0;
+const io = new IntersectionObserver(es => es.forEach(e => vis[e.target.id] = e.isIntersecting),
+{ rootMargin: '120px' });
+['pSat', 'pRad', 'pTown', 'pVoice'].forEach(i => io.observe($('#' + i)));
+(function frame(t) { requestAnimationFrame(frame); if (document.hidden) return; const dt =
+Math.min((t - last) / 1000, .05); last = t; tasks.forEach(f => f(t / 1000, dt)); })(0);
+const DPR = () => Math.min(devicePixelRatio || 1, SET.lowpower ? 1 : 2);
+function fit(c, fn) { const f = () => { const d = DPR(); c.width = c.clientWidth * d; c.height =
+c.clientHeight * d; fn && fn(d); }; new ResizeObserver(f).observe(c); f(); }
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on');
+clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('on'), 1800); }
+/* ===== BACKGROUND PARTICLES ===== */
+(function () {
+const c = $('#bg'), x = c.getContext('2d'); let W, H; fit(c, () => { W = c.width; H = c.height; });
+const P = Array.from({ length: 36 }, () => ({ x: Math.random(), y: Math.random(), v: RN(.01, .04),r: RN(.6, 1.8) }));
+tasks.push((t, dt) => { x.clearRect(0, 0, W, H); if (!SET.particles || SET.lowpower) return;
+x.fillStyle = 'rgba(25,230,255,.5)'; P.forEach(p => { p.y -= p.v * dt; if (p.y < 0) p.y = 1;
+x.beginPath(); x.arc(p.x * W, p.y * H, p.r * DPR(), 0, TAU); x.fill(); }); });
+})();
+const LANGS = [
+["en", "English", "English", "Home|Radar|Agents|Chat|Profile", "Type to SENTRA…", "At your
+service, Sir.", "en-US"],
+,"کو لکھیں...", "حکم کیجیے، جناب۔ SENTRA ","ہوم|ریڈار|ایجنٹس|چیٹ|پروفائل" ,"Urdu ","اردو" ,"ur["
+"ur-PK"],
+,"ته ولیکئ...", "ستاسو خدمت ته حاضر یم۔ SENTRA ","کور|رادار|اجنټان|چیټ|پروفایل" ,"Pashto ","پښتو" ,"ps["
+"ps-AF"],
+["ru", "Русский", "Russian", "Главная|Радар|Агенты|Чат|Профиль", "Напишите
+SENTRA…", "К вашим услугам.", "ru-RU"],
+["zh", "中文", "Chinese", "主页|雷达|代理|聊天|个人", "输入给 SENTRA…", "随时为您效劳。
+", "zh-CN"],
+["tr", "Türkçe", "Turkish", "Ana Sayfa|Radar|Ajanlar|Sohbet|Profil", "SENTRA'ya yazın…",
+"Emrinizdeyim efendim.", "tr-TR"],
+["hi", "हि न्दी", "Hindi", "होम|रडार|एजेंट|चटै |प्रोफ़ाइल", "SENTRA को लि खें…", "आपकी सेवा मेंहाज़ि र
+हूँ।", "hi-IN"],
+["IR-fa ",".بنویسید...", "در خدمتم قربان SENTRA خانه|رادار|عاملها|گفتگو|پروفایل", "به" ,"Farsi ","فارسی" ,"fa["
+];
+const LG = () => { const x = LANGS.find(y => y[0] == SET.lang) || LANGS[0]; return { code:
+x[0], nat: x[1], en: x[2], nav: x[3].split('|'), ph: x[4], hello: x[5], sr: x[6] }; };
+function setLang(c) {
+if (!LANGS.some(x => x[0] == c)) return;
+SET.lang = c; const L = LG(); document.documentElement.lang = c;
+$$('#nav button').forEach((b, i) => b.lastChild.textContent = L.nav[i]);
+$('#ci').placeholder = L.ph;
+try { localStorage.setItem('sentra-lang', c); } catch (e) {}
+toast('🌐 ' + L.nat);
+}
+const lgBtn = () => Object.assign(document.createElement('button'), { className: 'btn',
+textContent: LG().nat, onclick: () => openSheet('lang') });
+/* ===== AI BACKEND ===== */
+const API = {
+mod: 'idle',
+async sendMessage(m) { this.mod = 'sendMessage'; await sleep(600 + Math.random() *
+700); return (await this.executeCommand(m)) || this.getAgentResponse(m); },
+getAgentResponse(m) {
+if (SET.lang != 'en') return LG().hello + ' «' + m.slice(0, 80) + '»';
+const a = AG.list[AG.cur], p = { Tactical: 'Affirmative, Sir. ', Friendly: 'Sure thing! ',
+Analytical: 'Analysis: ' }[SET.persona], l = m.toLowerCase();
+if (/capab|who are you|introduce/.test(l)) return p + 'I am SENTRA AI, created for
+DesignDev Studio and owned by Inventor Muhammad Numan. How may I assist?';if (/radar|threat/.test(l)) return p + 'Radar shows ' + RAD.targets.filter(t => t.t == 'h').length +
+' unidentified contacts. Open radar to inspect.';
+return p + a.n + ' (' + a.role + ') acknowledged: "' + m.slice(0, 60) + '".';
+},
+async processVoiceCommand(c) { this.mod = 'processVoiceCommand'; const r = await
+this.executeCommand(c); return r || this.sendMessage(c); },
+async scanAt(lo, la, name) {
+this.mod = 'scanArea'; await sleep(800); MAPEV.length = 0;
+for (let i = 0; i < 4; i++) MAPEV.push({ lon: lo + RN(-14, 14), lat: la + RN(-9, 9), sev:
+Math.random() < .4 ? 2 : 1, title: ['Movement', 'Tension', 'Activity', 'Alert'][i] + ' · ' + name });
+return 'SAMPLE DATA — ' + name + ': ' + MAPEV.length + ' events plotted.';
+},
+async executeCommand(c) {
+this.mod = 'executeCommand';
+const l = c.toLowerCase(), go = { radar: 'radar', agent: 'agents', town: 'agents', home:
+'home', chat: 'chat', profile: 'profile' };
+for (const k in go) if (l.includes('open ' + k) || l.includes('show ' + k)) { await sleep(400);
+navTo(go[k]); return 'Opening ' + k + '.'; }
+return null;
+}
+};
+/* ===== CHAT WORKSPACE ===== */
+function msg(who, txt, u, box = '#log') {
+const b = $(box), d = document.createElement('div');
+d.className = 'm' + (u ? ' u' : ''); d.dir = 'auto';
+d.innerHTML = '<small></small><span></span>';
+d.firstChild.textContent = who; d.lastChild.textContent = txt;
+b.append(d); b.scrollTop = b.scrollHeight;
+if (box == '#log') $('#last').textContent = who + ': ' + txt;
+while (b.children.length > 40) b.firstChild.remove();
+}
+function wsUpdate() { const a = AG.list[AG.cur]; $('#wag').textContent = a.n.toUpperCase();
+$('#wmod').textContent = 'Module: ' + API.mod; $('#wtask').textContent = a.tasks[a.ti]; }
+async function send(txt) { if (!txt) return; msg('You', txt, 1); $('#dots').classList.add('on');
+wsUpdate(); const r = await API.sendMessage(txt); $('#dots').classList.remove('on');
+msg('SENTRA · ' + AG.list[AG.cur].n, r); wsUpdate(); return r; }
+$('#cs').onclick = () => { const i = $('#ci'), v = i.value.trim(); i.value = ''; send(v); };
+$('#ci').onkeydown = e => { if (e.key == 'Enter') $('#cs').click(); };
+msg('SENTRA AI', 'I am SENTRA AI, created for DesignDev Studio and owned by Inventor
+Muhammad Numan. Tap a radar target, select an agent, or use the mic.');
+/* ===== NAV & MODALS ===== */
+const LM = matchMedia('(orientation:landscape) and (min-width:560px)');
+function navTo(n) {
+if (n == 'profile') { openSheet('profile'); return; }
+if (LM.matches) return;
+NAV.cur = n; document.body.dataset.v = n;$$('#nav button').forEach(b => b.classList.toggle('on', b.dataset.n == n));
+dispatchEvent(new Event('resize'));
+}
+$$('#nav button').forEach(b => b.onclick = () => navTo(b.dataset.n));
+const tg = (on, fn) => { const b = document.createElement('button'); b.className = 'sw' + (on
+? ' on' : ''); b.onclick = () => { b.classList.toggle('on'); fn(b.classList.contains('on')); }; return b; };
+function li(label, el) { const d = document.createElement('div'); d.className = 'li';
+d.innerHTML = '<span>' + label + '</span>'; el && d.append(el); return d; }
+const SH = {
+memory(b) { b.innerHTML = '<h3>MEMORY</h3>'; MEM.forEach((m, i) => b.append(li(m)));
+},
+skills(b) { b.innerHTML = '<h3>SKILLS</h3>'; SKILLS.forEach(s => b.append(li(s[0], tg(s[1],
+v => s[1] = v ? 1 : 0)))); },
+character(b) { b.innerHTML = '<h3>CHARACTER</h3><p style="color:var(--dim)">Persona:
+Tactical | Inventor: Muhammad Numan</p>'; },
+settings(b) { b.innerHTML = '<h3>SETTINGS</h3>'; b.append(li('Language', lgBtn()),
+li('Low-power mode', tg(SET.lowpower, v => SET.lowpower = v))); },
+profile(b) { b.innerHTML = '<h3>PROFILE</h3>'; b.append(li('Operator', 'Muhammad
+Numan'), li('Studio', 'DesignDev Studio'), li('Status', 'Active')); },
+menu(b) { b.innerHTML = '<h3>SENTRA COMMAND MENU</h3>'; }
+};
+SH.lang = b => {
+b.innerHTML = '<h3>LANGUAGE</h3>'; const g = document.createElement('div');
+g.className = 'cards2';
+LANGS.forEach(x => { const k = document.createElement('button'); k.className = 'btn' +
+(SET.lang == x[0] ? ' on' : ''); k.textContent = x[1]; k.onclick = () => { setLang(x[0]); closeSheet();
+}; g.append(k); });
+b.append(g);
+};
+function openSheet(k) { const s = $('#sc'); s.innerHTML = '<div class="grab"></div><div
+id="sb"></div>'; SH[k] && SH[k]($('#sb')); $('#sheet').classList.add('on'); }
+function closeSheet() { $('#sheet').classList.remove('on'); }
+$('#sheet').onclick = e => { if (e.target.id == 'sheet') closeSheet(); };
+$$('.card4').forEach(b => b.onclick = () => openSheet(b.dataset.s));
+$('#bMenu').onclick = () => openSheet('menu'); $('#bProf').onclick = () => openSheet('profile');
+$('#bLang').onclick = () => openSheet('lang');
+/* ===== SATELLITE CANVAS ===== */
+(function () {
+const c = $('#satc'), x = c.getContext('2d'); let W, H; fit(c, () => { W = c.clientWidth; H =
+c.clientHeight; x.setTransform(DPR(), 0, 0, DPR(), 0, 0); });
+tasks.push(t => {
+if (!vis.pSat) return; x.clearRect(0, 0, W, H);
+x.strokeStyle = 'rgba(25,230,255,.15)';
+for (let i = 0; i <= 10; i++) { x.beginPath(); x.moveTo(W * i / 10, 0); x.lineTo(W * i / 10, H);
+x.stroke(); }
+});})();
+/* ===== RADAR THREE.JS ===== */
+(function () {
+const cv = $('#rc'), box = $('#rcw'); let ren; try { ren = new THREE.WebGLRenderer({
+canvas: cv, antialias: true, alpha: true }); } catch (e) { return; }
+const sc = new THREE.Scene(), cam = new THREE.OrthographicCamera(-1.05, 1.05, 1.05,
+-1.05, 0, 10);
+tasks.push((t, dt) => { if (vis.pRad) ren.render(sc, cam); });
+})();
+/* ===== AGENT TOWN ===== */
+(function () {
+const cv = $('#townc'); let ren; try { ren = new THREE.WebGLRenderer({ canvas: cv,
+antialias: true }); } catch (e) { return; }
+const sc = new THREE.Scene(); sc.background = new THREE.Color(0x030b12);
+const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, .1, 100);
+tasks.push((t, dt) => { if (vis.pTown) ren.render(sc, cam); });
+})();
+/* ===== VOICE VOICE ===== */
+(function () {
+$('#mic').onclick = () => toast('Mic activated. Speak command...');
+})();
+setTimeout(() => { const b = $('#boot'); if (b) { b.style.opacity = 0; setTimeout(() =>
+b.remove(), 500); } }, 900);
+try { const sv = localStorage.getItem('sentra-lang'); if (sv) setLang(sv); } catch (e) {}
+</script>
+</body>
+</html>
