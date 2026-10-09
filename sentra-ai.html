@@ -350,4 +350,91 @@ setTimeout(()=>{const b=$('#boot');b.style.opacity=0;setTimeout(()=>b.remove(),5
 $('#pSat h2 span').onclick=$('#pRad h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('radar');$('#pTown h2 span').onclick=()=>document.body.dataset.v=='home'&&navTo('agents');
 $('#bLang').onclick=()=>openSheet('lang');try{const sv=localStorage.getItem('sentra-lang');if(sv&&sv!='en')setLang(sv)}catch(e){}
 try{const v=JSON.parse(localStorage.getItem('sentra-be')||'null');if(v){SET.beUrl=v[0];SET.beTok=v[1]}}catch(e){}
-</script></body></html>
+</script>
+  <script>
+
+const SENTRA_LANGUAGES = {
+    'urdu': { code: 'ur-PK', replyHello: "Sentra voice automated agent online. Ji boss, main aap ki kya khidmat kar sakta hoon?" },
+    'english': { code: 'en-US', replyHello: "Sentra voice automated agent online. Ready for command, boss." },
+    'chinese': { code: 'zh-CN', replyHello: "Sentra 语音自动化代理已上线。老板，随时听候您的差遣。" },
+    'russian': { code: 'ru-RU', replyHello: "Голосовой агент Sentra AI онлайн. Готов к работе, босс." },
+    'turkish': { code: 'tr-TR', replyHello: "Sentra sesli otomasyon ajanı çevrimiçi. Komut bekliyor, patron." },
+    'korean': { code: 'ko-KR', replyHello: "Sentra 음성 자동화 에이전트가 온라인 상태입니다. 보스, 명령을 내려주십시오." }
+};
+
+let currentLanguage = SENTRA_LANGUAGES.english;
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    
+    const micBtn = document.querySelector('.microphone-icon-selector') || document.querySelector('#mic');
+    const workspaceNotes = document.querySelector('.workspace-notes-selector') || document.body;
+
+    if (micBtn) {
+        micBtn.addEventListener('click', () => {
+            
+            recognition.lang = currentLanguage.code; 
+            recognition.start();
+            console.log(`Sentra AI is listening in ${recognition.lang}...`);
+            micBtn.style.opacity = "0.5";
+        });
+    }
+
+    recognition.onresult = async (event) => {
+        const userSpeech = event.results[0][0].transcript;
+        console.log("Captured Audio Text: " + userSpeech);
+        
+        await processMultilingualCommand(userSpeech);
+        if (micBtn) micBtn.style.opacity = "1";
+    };
+
+    recognition.onerror = () => {
+        if (micBtn) micBtn.style.opacity = "1";
+    };
+}
+
+function speakResponse(text, langCode) {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = langCode;
+    
+    const voices = synth.getVoices();
+    const matchedVoice = voices.find(v => v.lang.includes(langCode));
+    if (matchedVoice) utterance.voice = matchedVoice;
+    
+    synth.speak(utterance);
+}
+
+async function processMultilingualCommand(command) {
+    let text = command.toLowerCase();
+    let reply = "System active. Automated sequence monitoring.";
+  
+    if (text.includes('urdu') || text.includes('اردو')) {
+        currentLanguage = SENTRA_LANGUAGES.urdu;
+        reply = "Urdu language activated. Ji boss.";
+    } else if (text.includes('chinese') || text.includes('中文')) {
+        currentLanguage = SENTRA_LANGUAGES.chinese;
+        reply = "Chinese language activated.";
+    } else if (text.includes('russian') || text.includes('русский')) {
+        currentLanguage = SENTRA_LANGUAGES.russian;
+        reply = "Russian language activated.";
+    } else if (text.includes('turkish') || text.includes('türkçe')) {
+        currentLanguage = SENTRA_LANGUAGES.turkish;
+        reply = "Turkish language activated.";
+    } else if (text.includes('korean') || text.includes('한국어')) {
+        currentLanguage = SENTRA_LANGUAGES.korean;
+        reply = "Korean language activated.";
+    } else if (text.includes('english')) {
+        currentLanguage = SENTRA_LANGUAGES.english;
+        reply = "English language activated.";
+    } else {
+        if (text.includes('hello') || text.includes('sentra') || text.includes('سلام')) {
+            reply = currentLanguage.replyHello;
+        }
+    }
+    speakResponse(reply, currentLanguage.code);
+}
+</script>
+</body></html>
